@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
 
 class UserController extends Controller
 {
@@ -34,9 +38,15 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['password'] = Hash::make($validated['password']);
+
+        $user = User::create($validated);
+
+        return $user;
     }
 
     /**
@@ -68,11 +78,40 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, string $id)
     {
-        //
-    }
+        $user = User::findOrFail($id);
+        $validated = $request->validated();
 
+        $user->name = $validated['name'];
+
+        $user->save();
+
+        return $user;
+    }
+    public function email(UserRequest $request, string $id)
+    {
+
+        $user = User::findOrFail($id);
+        $validated = $request->validated();
+
+        $user->name = $validated['email'];
+
+        $user->save();
+
+        return $user;
+    }
+    public function password(UserRequest $request, string $id)
+    {
+        $validated = $request->validated();
+
+        $user = User::findOrFail($id);
+        $user->password = Hash::make($validated['password']);
+
+        $user->save();
+
+        return $user;
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -84,6 +123,20 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $user->delete();
+
+        return $user;
+    }
+    public function image(UserRequest $request, string $id)
+    {
+
+        $user = User::findOrFail($id);
+        if (!is_null($user->image)) {
+            Storage::disk('public')->delete($user->image);
+        }
+
+        $user->image = $request->file('image')->storePublicly('images', 'public');
+
+        $user->save();
 
         return $user;
     }
