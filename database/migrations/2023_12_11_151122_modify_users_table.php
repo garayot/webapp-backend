@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('first_name');
             $table->renameColumn('name', 'last_name');
-            $table->string('profile_image')->nullable();
             $table->enum('role', ['admin', 'user']);
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
