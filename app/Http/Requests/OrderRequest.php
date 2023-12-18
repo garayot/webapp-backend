@@ -13,7 +13,7 @@ class OrderRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,15 @@ class OrderRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    // OrdersRequest.php  
+
     public function rules()
     {
         return [
-            //
+            'customer_id' => 'required|exists:users,id',
+            'date' => 'required|date',
+            'status' => 'required|in:complete,incomplete',
+            'sales_total' => 'required|numeric'
         ];
     }
 }

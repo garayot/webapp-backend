@@ -21,10 +21,13 @@ class InvoiceRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    // InvoicesRequest.php
+
     public function rules()
     {
         return [
-            //
+            'order_id' => 'required|exists:orders,order_id',
+            'car_id' => 'required|exists:units,car_id',
         ];
     }
 }

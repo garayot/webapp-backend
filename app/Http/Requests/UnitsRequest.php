@@ -13,7 +13,7 @@ class UnitsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,21 @@ class UnitsRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
+    // UnitsRequest.php
+
     public function rules()
     {
         return [
-            //
+            'make' => 'required|string|max:255',
+            'model_name' => 'required|string|max:255',
+            'model_year' => 'required|integer|digits:4',
+            'type' => 'required|string|max:255',
+            'color' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'description' => 'nullable|string',
+            'image1' => 'required|image|mimes:jpeg,png,jpg',
+            'image2' => 'nullable|image|mimes:jpeg,png,jpg',
+            'image3' => 'nullable|image|mimes:jpeg,png,jpg',
         ];
     }
 }

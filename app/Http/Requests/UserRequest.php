@@ -35,9 +35,19 @@ class UserRequest extends FormRequest
                 'email'     => 'required|string|email|unique:users,email|max:255',
                 'password'  => 'required|min:8|confirmed',
             ];
+        } else if (request()->routeIs('user.storeInfo')) {
+            return [
+                'role' => 'required|in:admin,user',
+                'phone' => 'nullable|digits_between:10,12',
+                'address' => 'nullable|string',
+                'gender' => 'nullable|in:male,female,other',
+                'date_of_birth' => 'nullable|date',
+                'national_id' => 'nullable|unique:users|digits:14',
+            ];
         } else if (request()->routeIs('user.update')) {
             return [
-                'name'          => 'required|string|max:255',
+                'firstname'          => 'required|string|max:255',
+                'lastname'          => 'required|string|max:255',
             ];
         } else if (request()->routeIs('user.email')) {
             return [
