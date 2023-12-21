@@ -35,15 +35,6 @@ class UserRequest extends FormRequest
                 'email'     => 'required|string|email|unique:users,email|max:255',
                 'password'  => 'required|min:8|confirmed',
             ];
-        } else if (request()->routeIs('user.storeInfo')) {
-            return [
-                'role' => 'required|in:admin,user',
-                'phone' => 'nullable|digits_between:10,12',
-                'address' => 'nullable|string',
-                'gender' => 'nullable|in:male,female,other',
-                'date_of_birth' => 'nullable|date',
-                'national_id' => 'nullable|unique:users|digits:14',
-            ];
         } else if (request()->routeIs('user.update')) {
             return [
                 'firstname'          => 'required|string|max:255',
@@ -61,6 +52,15 @@ class UserRequest extends FormRequest
             return [
                 'image'      => 'required|image|mimes:jpg,bmp,png|max:2048',
             ];
-        }
+        }else if (request()->routeIs('profile.storeInfo')) {
+            return [
+                'role' => 'required|in:admin,user',
+                'phone' => 'nullable|digits_between:10,12',
+                'address' => 'nullable|string',
+                'gender' => 'nullable|in:male,female,other',
+                'date_of_birth' => 'nullable|date',
+                'national_ID' => 'nullable|unique:users|digits:10',
+            ];
+        } 
     }
 }

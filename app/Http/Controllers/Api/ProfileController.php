@@ -29,4 +29,23 @@ class ProfileController extends Controller
     {
         return $request->user();
     }
+    public function storeInfo(UserRequest $request)
+    {
+        $user = User::findOrFail($request->user()->id);
+
+        $user->role = $request->input('role');
+        $user->phone = $request->input('phone');  
+        $user->address = $request->input('address');
+        $user->gender = $request->input('gender');
+        $user->date_of_birth = $request->input('date_of_birth');
+        $user->national_ID = $request->input('national_ID');
+
+        $user->save();
+
+        return $user;
+    }
+    public function updateInfo(Request $request)
+    {
+        return $request->user();
+    }
 }

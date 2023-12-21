@@ -33,9 +33,9 @@ class UnitsRequest extends FormRequest
             'color' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'nullable|string',
-            'image1' => 'required|image|mimes:jpeg,png,jpg',
-            'image2' => 'nullable|image|mimes:jpeg,png,jpg',
-            'image3' => 'nullable|image|mimes:jpeg,png,jpg',
+            'image1' => 'required|image|mimes:jpeg,png,jpg,gif',
+            'image2' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'image3' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ];
     }
 }
