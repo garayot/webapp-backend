@@ -25,10 +25,12 @@ class ProfileController extends Controller
 
         return $user;
     }
-    public function show(Request $request)
+
+    public function show(string $id)
     {
-        return $request->user();
+        return User::findOrFail($id);
     }
+
     public function storeInfo(UserRequest $request)
     {
         $user = User::findOrFail($request->user()->id);
@@ -44,8 +46,19 @@ class ProfileController extends Controller
 
         return $user;
     }
-    public function updateInfo(Request $request)
+    public function updateInfo(UserRequest $request)
     {
-        return $request->user();
+        $user = User::findOrFail($request->user()->id);
+
+        $user->role = $request->input('role');
+        $user->phone = $request->input('phone');
+        $user->address = $request->input('address'); 
+        $user->gender = $request->input('gender');
+        $user->date_of_birth = $request->input('date_of_birth');
+        $user->national_id = $request->input('national_id');
+
+        $user->save();
+
+        return $user;
     }
 }

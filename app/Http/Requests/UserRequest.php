@@ -61,6 +61,28 @@ class UserRequest extends FormRequest
                 'date_of_birth' => 'nullable|date',
                 'national_ID' => 'nullable|unique:users|digits:10',
             ];
+        } else if (request()->routeIs('profile.updateInfo')) {
+            return [
+                'role' => 'required|in:admin,user',
+                'phone' => 'nullable|digits_between:10,12',
+                'address' => 'nullable|string',
+                'gender' => 'nullable|in:male,female,other',
+                'date_of_birth' => 'nullable|date',
+                'national_ID' => 'nullable|unique:users|digits:10',
+            ];
+        } else if (request()->routeIs('profile.show')) {
+            return [
+                'firstname' => 'required|string|max:255',
+                'lastname'  => 'required|string|max:255',
+                'email'     => 'required|string|email|unique:users,email|max:255',
+                'image'      => 'required|image|mimes:jpg,bmp,png|max:2048',
+                'role' => 'required|in:admin,user',
+                'phone' => 'nullable|digits_between:10,12',
+                'address' => 'nullable|string',
+                'gender' => 'nullable|in:male,female,other',
+                'date_of_birth' => 'nullable|date',
+                'national_ID' => 'nullable|unique:users|digits:10',
+            ];
         } 
     }
 }

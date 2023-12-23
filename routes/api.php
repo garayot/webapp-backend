@@ -23,22 +23,12 @@ use App\Http\Controllers\API\UnitsController;
 
 Route::post('/login', [AuthController::class, 'login'])->name('user.login');
 Route::post('/user', [UserController::class, 'store'])->name('user.store');
-Route::controller(UnitsController::class)->group(function () {
-    Route::get('/home', 'index');
-});
+Route::get('/home', [UnitsController::class, 'index']);
+
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
     //Admin APIs
-    Route::controller(CarouselItemsController::class)->group(function () {
-        Route::get('/carousel', 'index');
-        Route::get('/carousel/{id}', 'show');
-        Route::get('/carousel/all', 'all');
-        Route::delete('/carousel/{id}', 'destroy');
-        Route::post('/carousel', 'store');
-        Route::put('/carousel/{id}', 'update');
-    });
-
     Route::controller(UserController::class)->group(function () {
         Route::get('/user', 'index');
         Route::get('/user/{id}', 'show');
@@ -48,18 +38,21 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/user/image/{id}', 'image')->name('user.image');
         Route::delete('/user/{id}', 'destroy');
     });
-    //Units Crud
+    //Units 
     Route::controller(UnitsController::class)->group(function () {
-        Route::get('/unit', 'index');
+        // Route::get('/unit', 'index');
         Route::delete('/unit/{id}', 'destroy');
         Route::post('/unit', 'store');
         Route::put('/unit/{id}', 'update');
     });
 
     // User specific APIs
-    Route::get('/profile/show', [ProfileController::class, 'show']);
+    Route::get('/profile/show/{id}', [ProfileController::class, 'show']);
     Route::post('/profile/storeInfo', [ProfileController::class, 'storeInfo'])->name('profile.storeInfo');
+    Route::put('/profile/updateInfo', [ProfileController::class, 'storeInfo'])->name('profile.updateInfo');
     Route::put('/profile/image', [ProfileController::class, 'image'])->name('profile.image');
+    Route::delete('/profile/{id}', 'destroy');
+
 });
 
 
@@ -69,4 +62,12 @@ Route::controller(LettersController::class)->group(function () {
     Route::delete('/letters/{id}', 'destroy');
     Route::put('/letters/{id}', 'update');
     Route::post('/letters', 'store');
+});
+Route::controller(CarouselItemsController::class)->group(function () {
+    Route::get('/carousel', 'index');
+    Route::get('/carousel/{id}', 'show');
+    Route::get('/carousel/all', 'all');
+    Route::delete('/carousel/{id}', 'destroy');
+    Route::post('/carousel', 'store');
+    Route::put('/carousel/{id}', 'update');
 });

@@ -15,10 +15,21 @@ class UnitsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function index(Request $request) 
     {
-        return Units::all();
+        $query = Units::query();
+        
+        if($request->filled('keyword')) {
+            $keyword = $request->input('keyword');
+            $query->where('make', 'LIKE', "%{$keyword}%")
+                ->orWhere('model_name', 'LIKE', "%{$keyword}%")
+                ->orWhere('model_year', 'LIKE', "%{$keyword}%");
+                }
+    
+        return $query->paginate(8);
     }
+
 
     /**
      * Show the form for creating a new resource.
