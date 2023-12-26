@@ -27,7 +27,7 @@ class UnitsController extends Controller
                 ->orWhere('model_year', 'LIKE', "%{$keyword}%");
                 }
     
-        return $query->paginate(8);
+        return $query->paginate(3);
     }
 
 
@@ -51,17 +51,28 @@ class UnitsController extends Controller
     {
 
         $validated = $request->validated();
-
-        // Handle image uploads
-        $validated['image1'] = $request->file('image1')->storePublicly('unitImages', 'public');
-        $validated['image2'] = $request->file('image2')->storePublicly('unitImages', 'public');
-        $validated['image3'] = $request->file('image3')->storePublicly('unitImages', 'public');
-
-        // Create unit with images 
+      
+        // Image 1
+        if($request->hasFile('image1')) {
+          $validated['image1'] = $request->file('image1')->storePublicly('unitImages', 'public');
+        }
+      
+        // Image 2
+        if($request->hasFile('image2')) { 
+          $validated['image2'] = $request->file('image2')->storePublicly('unitImages', 'public');
+        }
+      
+        // Image 3
+        if($request->hasFile('image3')) {
+          $validated['image3'] = $request->file('image3')->storePublicly('unitImages', 'public'); 
+        }
+      
+        // Create unit
         $unit = Units::create($validated);
-
+      
         return $unit;
-    }
+      
+      }
 
     /**
      * Display the specified resource.
@@ -96,11 +107,22 @@ class UnitsController extends Controller
     {
         $validated = $request->validated();
 
-        $letter = Units::findOrFail($id);
+        $unit = Units::findOrFail($id);
 
-        $letter->update($validated);
+        if (!is_null($unit->image1)) {
+            Storage::disk('public')->delete($unit->image1);
+        }
 
-        return $letter;
+        if (!is_null($unit->image2)) {
+            Storage::disk('public')->delete($unit->image2);
+        }
+
+        if (!is_null($unit->image3)) {
+            Storage::disk('public')->delete($unit->image3);
+        }
+        $unit->update($validated);
+
+        return $unit;
     }
 
     /**

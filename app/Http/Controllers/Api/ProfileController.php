@@ -26,9 +26,9 @@ class ProfileController extends Controller
         return $user;
     }
 
-    public function show(string $id)
+    public function show(Request $request)
     {
-        return User::findOrFail($id);
+        return $request->user();
     }
 
     public function storeInfo(UserRequest $request)

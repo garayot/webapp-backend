@@ -30,8 +30,8 @@ class UserRequest extends FormRequest
             ];
         } else if (request()->routeIs('user.store')) {
             return [
-                'firstname' => 'required|string|max:255',
-                'lastname'  => 'required|string|max:255',
+                'first_name' => 'required|string|max:255',
+                'last_name'  => 'required|string|max:255',
                 'email'     => 'required|string|email|unique:users,email|max:255',
                 'password'  => 'required|min:8|confirmed',
             ];

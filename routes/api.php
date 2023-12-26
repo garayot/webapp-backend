@@ -38,6 +38,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/user/image/{id}', 'image')->name('user.image');
         Route::delete('/user/{id}', 'destroy');
     });
+    Route::controller(CarouselItemsController::class)->group(function () {
+        Route::get('/carousel', 'index');
+        Route::get('/carousel/{id}', 'show');
+        Route::get('/carousel/all', 'all');
+        Route::delete('/carousel/{id}', 'destroy');
+        Route::post('/carousel', 'store');
+        Route::put('/carousel/{id}', 'update');
+    });
     //Units 
     Route::controller(UnitsController::class)->group(function () {
         // Route::get('/unit', 'index');
@@ -47,11 +55,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     });
 
     // User specific APIs
-    Route::get('/profile/show/{id}', [ProfileController::class, 'show']);
+    Route::get('/profile/show', [ProfileController::class, 'show']);
     Route::post('/profile/storeInfo', [ProfileController::class, 'storeInfo'])->name('profile.storeInfo');
     Route::put('/profile/updateInfo', [ProfileController::class, 'storeInfo'])->name('profile.updateInfo');
     Route::put('/profile/image', [ProfileController::class, 'image'])->name('profile.image');
-    Route::delete('/profile/{id}', 'destroy');
+    // Route::delete('/profile/{id}', 'destroy');
 
 });
 
@@ -62,12 +70,4 @@ Route::controller(LettersController::class)->group(function () {
     Route::delete('/letters/{id}', 'destroy');
     Route::put('/letters/{id}', 'update');
     Route::post('/letters', 'store');
-});
-Route::controller(CarouselItemsController::class)->group(function () {
-    Route::get('/carousel', 'index');
-    Route::get('/carousel/{id}', 'show');
-    Route::get('/carousel/all', 'all');
-    Route::delete('/carousel/{id}', 'destroy');
-    Route::post('/carousel', 'store');
-    Route::put('/carousel/{id}', 'update');
 });
