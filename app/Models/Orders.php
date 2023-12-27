@@ -30,6 +30,7 @@ class Orders extends Model
      */
     protected $fillable = [
         'customer_ID',
+        'car_ID',
         'date',
         'status',
         'sales_total'

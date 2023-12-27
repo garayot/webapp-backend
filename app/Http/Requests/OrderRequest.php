@@ -26,7 +26,8 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_id' => 'required|exists:users,id',
+            'customer_ID' => 'required|exists:users,id',
+            'car_ID' => 'required|exists:units,car_ID',
             'date' => 'required|date',
             'status' => 'required|in:complete,incomplete',
             'sales_total' => 'required|numeric'

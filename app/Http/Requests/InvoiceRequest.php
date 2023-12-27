@@ -26,8 +26,9 @@ class InvoiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'order_id' => 'required|exists:orders,order_id',
-            'car_id' => 'required|exists:units,car_id',
+            'order_ID' => 'required|exists:orders,order_ID',
+            'car_ID' => 'required|exists:units,car_ID',
+            'customer_ID' => 'required|exists:users,id',
         ];
     }
 }
