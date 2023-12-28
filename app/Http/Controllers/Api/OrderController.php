@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
+use App\Models\Orders;
+use App\Http\Requests\OrderRequest;
 
 
 class OrderController extends Controller
@@ -17,7 +19,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        return Orders::all();
     }
 
     /**
@@ -27,19 +29,7 @@ class OrderController extends Controller
      */
     public function create(UserRequest $request)
     {
-        $user = User::find($request->user()->id);
-        if ($user->Profile->phone == null or $user->Profile->address == null or $user->Profile->national_id == null) {
-            return redirect()->route('profile_index')->with('error', 'Your profile is incomplete');
-        } else {
-            $car = Car::find($id);
-            if (Auth::user()->role == 'Administrator') {
-                $OraderCount = Order::where('status', '=', 'incomplete')->count();
-            } else {
-                $OraderCount = Order::where('user_id', '=', Auth::user()->id)->where('status', '=', 'incomplete')->count();
-            }
-            $myProfile = User::find(Auth::user()->id)->Profile;
-            return view('cars.singleCar', compact('car', 'myProfile', 'OraderCount'));
-        }
+        
     }
 
     /**
@@ -48,9 +38,10 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        //
+        $order = Orders::create($request->validated());
+        return response()->json($order, 201);
     }
 
     /**

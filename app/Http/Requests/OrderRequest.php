@@ -30,7 +30,7 @@ class OrderRequest extends FormRequest
             'car_ID' => 'required|exists:units,car_ID',
             'date' => 'required|date',
             'status' => 'required|in:complete,incomplete',
-            'sales_total' => 'required|numeric'
+            
         ];
     }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\API\CarouselItemsController;
 use App\Http\Controllers\API\UnitsController;
+use App\Http\Controllers\API\OrderController;
+
 
 
 /*
@@ -52,6 +54,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/unit/{id}', 'destroy');
         Route::post('/unit', 'store');
         Route::put('/unit/{id}', 'update');
+    });
+    Route::controller(OrderController::class)->group(function () {
+        // Route::get('/order', 'index');
+        // Route::delete('/unit/{id}', 'destroy');
+        Route::post('/orders', 'store');
+        // Route::put('/unit/{id}', 'update');
     });
 
     // User specific APIs

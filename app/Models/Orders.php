@@ -33,6 +33,6 @@ class Orders extends Model
         'car_ID',
         'date',
         'status',
-        'sales_total'
+        
     ];
 }
