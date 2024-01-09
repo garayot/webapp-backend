@@ -56,7 +56,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/unit/{id}', 'update');
     });
     Route::controller(OrderController::class)->group(function () {
-        // Route::get('/order', 'index');
+        Route::get('/orders', 'index');
         // Route::delete('/unit/{id}', 'destroy');
         Route::post('/orders', 'store');
         // Route::put('/unit/{id}', 'update');

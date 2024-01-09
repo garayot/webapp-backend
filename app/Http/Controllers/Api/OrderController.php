@@ -17,9 +17,22 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Orders::all();
+        $keyword = $request->get('keyword'); 
+        $perPage = 5;
+    
+        $orders = Orders::with(['unit', 'user'])
+        ->when($keyword, function ($query) use ($keyword) {
+            $query->whereHas('unit', function ($query) use ($keyword) {
+                $query->where('make', 'like', "%{$keyword}%")
+                    ->orWhere('model_name', 'like', "%{$keyword}%"); 
+            });
+        })
+        ->latest()
+        ->paginate($perPage);
+
+    return view('orders.index', compact('orders')); 
     }
 
     /**
